@@ -11,7 +11,7 @@ public class ConexaoFactory {
 		Connection c=null;
 		try {
 			c = DriverManager
-					.getConnection("jdbc:postgresql://localhost:5432/fabricawebdb323232", "postgres","postgres");
+					.getConnection("jdbc:postgresql://localhost:5432/fabricawebdb", "postgres","postgres");
 		} catch (SQLException e) {
 			//Wrapper de Exception
 			throw new RuntimeException("não conectou!", e);
