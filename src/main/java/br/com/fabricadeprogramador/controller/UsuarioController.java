@@ -3,6 +3,7 @@ package br.com.fabricadeprogramador.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -61,8 +62,15 @@ public class UsuarioController extends HttpServlet {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		
 		if (acao == null || acao.equals("lis")) {
+			//Carregando a lista do banco
 			List<Usuario> lista = usuarioDAO.buscarTodos();
-			resp.getWriter().print(lista);
+			//Adicionando atributo no request
+			req.setAttribute("listaUsu", lista);
+			//Objeto de encaminhamento
+			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listausu.jsp");
+			//Encaminhando o request e o respose para o JSP
+			dispatcher.forward(req, resp);
+			
 		} else if (acao.equals("esc")){
 			// Pegando o id da tela
 			String id = req.getParameter("id");
