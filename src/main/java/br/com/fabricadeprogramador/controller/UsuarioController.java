@@ -38,7 +38,7 @@ public class UsuarioController extends HttpServlet {
 		// Instanciando usuario e setando dados
 		Usuario usu = new Usuario();
 		// se o id existir
-		if (id != null) {
+		if (id != null && id !="0") {
 			// Convertendo a strind ID para inteiro e setando no usuario
 			usu.setId(Integer.parseInt(id));
 		}
@@ -60,7 +60,6 @@ public class UsuarioController extends HttpServlet {
 			throws ServletException, IOException {
 		String acao = req.getParameter("acao");
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		
 		if (acao == null || acao.equals("lis")) {
 			//Carregando a lista do banco
 			List<Usuario> lista = usuarioDAO.buscarTodos();
@@ -70,7 +69,6 @@ public class UsuarioController extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listausu.jsp");
 			//Encaminhando o request e o respose para o JSP
 			dispatcher.forward(req, resp);
-			
 		} else if (acao.equals("esc")){
 			// Pegando o id da tela
 			String id = req.getParameter("id");
@@ -79,6 +77,26 @@ public class UsuarioController extends HttpServlet {
 			usuarioDAO.excluir(usu);
 			// Mensagem
 			resp.getWriter().print("Excluido!");
+		} else if (acao.equals("alt")){
+			String id = req.getParameter("id");
+			Usuario usuario = usuarioDAO.buscarPorId(Integer.parseInt(id));
+			req.setAttribute("usu", usuario);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/formusuario.jsp");
+			dispatcher.forward(req, resp);
+			
+		}else if (acao.equals("cad")){
+			String id = req.getParameter("id");
+				
+			Usuario usuario = new Usuario();
+			usuario.setId(0);
+			usuario.setLogin("");
+			usuario.setNome("");
+			usuario.setSenha("");
+			
+			req.setAttribute("usu", usuario);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/formusuario.jsp");
+			dispatcher.forward(req, resp);
+			
 		}
 	}
 }

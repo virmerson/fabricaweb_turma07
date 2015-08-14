@@ -113,6 +113,26 @@ public class UsuarioDAO {
 		return lista;
 	}
 
+	public Usuario buscarPorId(int id) {
+		
+		Usuario usuario=null;
+		String sql = "Select * from usuario where id = ?";
+		try (PreparedStatement preparador = con.prepareStatement(sql)){
+			preparador.setInt(1, id);
+			ResultSet resultado =preparador.executeQuery();
+			if (resultado.next()){
+				usuario =  new Usuario();
+				usuario.setId(resultado.getInt("id"));
+				usuario.setNome(resultado.getString("nome"));
+				usuario.setLogin(resultado.getString("login"));
+				usuario.setSenha(resultado.getString("senha"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return usuario;
+	}
+
 	
 	
 
