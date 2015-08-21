@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.CORBA.RepositoryIdHelper;
+
 import br.com.fabricadeprogramador.persistencia.entidade.Usuario;
 import br.com.fabricadeprogramador.persistencia.jdbc.UsuarioDAO;
 
@@ -69,14 +71,14 @@ public class UsuarioController extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/listausu.jsp");
 			//Encaminhando o request e o respose para o JSP
 			dispatcher.forward(req, resp);
-		} else if (acao.equals("esc")){
+		} else if (acao.equals("exc")){
 			// Pegando o id da tela
 			String id = req.getParameter("id");
 			Usuario usu = new Usuario();
 			usu.setId(Integer.parseInt(id));
 			usuarioDAO.excluir(usu);
 			// Mensagem
-			resp.getWriter().print("Excluido!");
+			resp.sendRedirect("usucontroller.do?acao=lis");
 		} else if (acao.equals("alt")){
 			String id = req.getParameter("id");
 			Usuario usuario = usuarioDAO.buscarPorId(Integer.parseInt(id));

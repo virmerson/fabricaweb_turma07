@@ -7,10 +7,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript">
+
+function excluir(id){
+	if (window.confirm("Deseja Realmente Excluir?")){
+		location.href="usucontroller.do?acao=exc&id="+id;
+	}
+}
+</script>
 </head>
 <body>
+<%@ include file="menu.jsp" %>
 
 <table border="1">
+
+<a href="usucontroller.do?acao=cad">Novo</a>
+
 	<tr>
 		<th> ID </th>
 		<th> NOME </th>
@@ -25,7 +38,10 @@ for (Usuario u:lista){
 	<tr>  
 		<td><%=u.getId()%>  </td> 
 		<td><%= u.getNome() %></td> 
-		<td> <a href="usucontroller.do?acao=alt&id=<%=u.getId()%>">Editar</a> </td>   
+		<td> <a href="usucontroller.do?acao=alt&id=<%=u.getId()%>">Editar</a> 
+			  <a href="javascript:excluir(<%=u.getId()%>)">Excluir</a>
+		</td>   
+		
 	</tr>
 
 <%
